@@ -141,13 +141,22 @@ void loop() {
   encenderBombilla();
   delay(500);
   
+    lcd_1.clear();
+    lcd_1.print("Pregunta #");
+    lcd_1.print(i+1);
+    delay(5000);
+  
+  
   // Espera hasta que el botón sea presionado
   while (digitalRead(BOTON_PIN) == HIGH) {   
     // Código que se ejecutará mientras el botón esté presionado
     lcd_1.clear();
     lcd_1.print("Encendido");
     controlarFocoRGB(224, 112, 0);
-    delay(500);      
+    delay(500); 
+    
+    
+
   
     resultado = verificarRespuesta(respuestasCorrectas[i]) + resultado;
 
