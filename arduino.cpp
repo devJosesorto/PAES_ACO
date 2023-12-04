@@ -70,15 +70,26 @@ int verificarRespuesta(char letraEnviada) {
 
   // Verificar si todas las fotorresistencias tienen el mismo valor
   bool todasIguales = true;
-
-  for (int i = 1; i < 4; i++) {
-    if (valoresFotoresistencias[i] != valoresFotoresistencias[0]) {
-      todasIguales = false;
-      break;  // No es necesario seguir verificando si encontramos una diferencia
+    for (int i = 1; i < 4; i++) {
+        if (valoresFotoresistencias[i] != valoresFotoresistencias[0]) {
+            todasIguales = false;
+            break;  // No es necesario seguir verificando si encontramos una diferencia
     }
   }
 
-  if (todasIguales) {
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+      if (valoresFotoresistencias[i] < 381) {
+        for (int j = i + 1; j < 4; j++) {
+          if (valoresFotoresistencias[i] == valoresFotoresistencias[j]) {
+            count++;
+            break;
+          }
+        }
+      }
+    }
+    
+  if (todasIguales || count > 0) {
     // Todas las fotorresistencias tienen el mismo valor
    // La respuesta no está rellenada
       lcd_1.clear();
