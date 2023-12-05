@@ -99,7 +99,7 @@ int verificarRespuesta(char letraEnviada) {
     // Todas las fotorresistencias tienen el mismo valor
    // La respuesta no está rellenada
       lcd_1.clear();
-      lcd_1.print("Respuesta no rellenada");
+      lcd_1.print("Respuesta invalida");
       delay(4000);
       return 0;
 
@@ -116,14 +116,20 @@ int verificarRespuesta(char letraEnviada) {
       lcd_1.print(respuestaSeleccionada);
       delay(4000);
       if (letraEnviada == respuestaSeleccionada) {
+        lcd_1.clear();
+        lcd_1.print("Correcto: ");
+        delay(2000);
         return 1; // Devolver 1 si la letra enviada es igual a la respuesta seleccionada
       } else {
+        lcd_1.clear();
+        lcd_1.print("Incorrecto: ");
+        delay(2000);
         return 0; // Devolver 0 si la letra enviada es diferente a la respuesta seleccionada
       }    
     } else {
       // La respuesta no está rellenada
       lcd_1.clear();
-      lcd_1.print("Respuesta no rellenada");
+      lcd_1.print("Respuesta invalida");
       delay(4000);
       return 0;
     }
@@ -143,7 +149,7 @@ void imprimirDesplazarTexto(const char *texto) {
     delay(200);  // Ajusta el tiempo de espera según tu preferencia
   }
 
-  delay(1000);  // Espera 2 segundos antes de salir del método
+  delay(2000);  // Espera 2 segundos antes de salir del método
 }
 
 
@@ -175,7 +181,7 @@ void loop() {
   
     lcd_1.clear();
     imprimirDesplazarTexto(preguntas[i]);
-    delay(1000);
+    delay(2000);
   
   
   // Espera hasta que el botón sea presionado
