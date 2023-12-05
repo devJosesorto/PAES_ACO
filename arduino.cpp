@@ -1,11 +1,17 @@
 #include <LiquidCrystal.h>
 
-char respuestasCorrectas[] = {'A', 'B'};
+char respuestasCorrectas[] = {'A', 'B', 'C', 'D', 'A'};
 int longitud = sizeof(respuestasCorrectas) / sizeof(respuestasCorrectas[0]);
 int i = 0;
 float resultado = 0;
 
-
+char preguntas[5][90] = {
+    "Cual es la capital de Francia?",
+    "En que anio se descubrio America?",
+    "Cual es el simbolo quimico del oro?",
+    "Quien escribio Cien anios de soledad?",
+    "Cual es el planeta mas grande del sistema solar?"
+};
 // Inicializar el objeto lcd con los pines correspondientes
 LiquidCrystal lcd_1(10, 9, 7, 6, 5, 4);
 
@@ -46,7 +52,7 @@ void apagarBombilla() {
 int verificarRespuesta(char letraEnviada) {
     apagarBombilla();
     analogWrite(motorcito, 1);
-    delay(5000);
+    delay(3000);
     analogWrite(motorcito, 0);
   
   // Lectura de valores de las fotoresistencias
@@ -94,7 +100,7 @@ int verificarRespuesta(char letraEnviada) {
    // La respuesta no está rellenada
       lcd_1.clear();
       lcd_1.print("Respuesta no rellenada");
-      delay(8000);
+      delay(4000);
       return 0;
 
   } else {
@@ -108,7 +114,7 @@ int verificarRespuesta(char letraEnviada) {
       lcd_1.clear();
       lcd_1.print("Respuesta: ");
       lcd_1.print(respuestaSeleccionada);
-      delay(8000);
+      delay(4000);
       if (letraEnviada == respuestaSeleccionada) {
         return 1; // Devolver 1 si la letra enviada es igual a la respuesta seleccionada
       } else {
@@ -118,11 +124,26 @@ int verificarRespuesta(char letraEnviada) {
       // La respuesta no está rellenada
       lcd_1.clear();
       lcd_1.print("Respuesta no rellenada");
-      delay(8000);
+      delay(4000);
       return 0;
     }
   }
 
+}
+
+
+void imprimirDesplazarTexto(const char *texto) {
+  lcd_1.clear();  // Limpia la pantalla
+  lcd_1.begin(16, 2);
+  lcd_1.print(texto);  // Imprime el texto
+
+  // Desplaza el texto de derecha a izquierda
+  for (int i = 0; i < strlen(texto) + 16; i++) {
+    lcd_1.scrollDisplayLeft();
+    delay(200);  // Ajusta el tiempo de espera según tu preferencia
+  }
+
+  delay(1000);  // Espera 2 segundos antes de salir del método
 }
 
 
@@ -153,9 +174,8 @@ void loop() {
   delay(500);
   
     lcd_1.clear();
-    lcd_1.print("Pregunta #");
-    lcd_1.print(i+1);
-    delay(5000);
+    imprimirDesplazarTexto(preguntas[i]);
+    delay(1000);
   
   
   // Espera hasta que el botón sea presionado
@@ -179,7 +199,7 @@ void loop() {
     lcd_1.print("Resultado : ");
     lcd_1.print(resultado * (10/(longitud)));
     controlarFocoRGB(255, 0, 127);
-	delay(10000);
+	delay(5000);
 
   } else{
 
